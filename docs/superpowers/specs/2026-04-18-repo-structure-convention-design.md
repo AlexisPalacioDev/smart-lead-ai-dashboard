@@ -213,3 +213,15 @@ This design does not mandate:
 - automatic migration tooling
 - a strict required folder template for every feature
 - renaming current files unless they are being actively touched
+
+## Implementation Note
+
+Initial adoption is intentionally incremental.
+
+The first concrete reference implementation is the dashboard feature under `web/src/features/dashboard/**`, which demonstrates:
+- render-only route files
+- extracted application behavior
+- extracted view-model builders
+- feature-local shared types
+
+The dashboard feature under `web/src/features/dashboard` is the initial reference path for this convention.
