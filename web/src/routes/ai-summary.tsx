@@ -1,5 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
+import { DEFAULT_LEADS_DIRECTORY_SEARCH } from "../features/leads/application/build-leads-directory-view-model";
+
 /**
  * ai-summary.tsx
  * Registers the AI Summary route placeholder used before full AI integration.
@@ -34,7 +36,11 @@ function AISummaryPage() {
           >
             [ GENERATE SUMMARY ]
           </Link>
-          <Link className="terminal-link" to="/leads">
+          <Link
+            className="terminal-link"
+            to="/leads"
+            search={DEFAULT_LEADS_DIRECTORY_SEARCH}
+          >
             [ RETURN TO DIRECTORY ]
           </Link>
         </div>

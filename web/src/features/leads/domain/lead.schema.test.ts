@@ -25,8 +25,6 @@ describe("leadFormSchema", () => {
       throw new Error("Expected invalid email input to fail validation");
     }
 
-    expect(result.error.flatten().fieldErrors.email).toEqual([
-      "Email must be valid",
-    ]);
+    expect(result.error.flatten().fieldErrors.email).toEqual(["Email invalido"]);
   });
 });
