@@ -2,6 +2,12 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { AppShell } from '../components/app-shell/app-shell'
 
+/**
+ * -__root.test.tsx
+ * Verifies the shell exposes the three approved top-level routes.
+ * Uses a lightweight mocked `Link` so assertions stay focused on labels.
+ */
+
 vi.mock('@tanstack/react-router', () => ({
   Link: ({
     children,

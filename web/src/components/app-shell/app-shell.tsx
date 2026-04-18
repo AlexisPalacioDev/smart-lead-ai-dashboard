@@ -1,10 +1,17 @@
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router";
+
+/**
+ * app-shell.tsx
+ * Defines shared desktop shell for Smart Lead AI routes, including skip link,
+ * product identity, and top-level route navigation.
+ * Depends on Phosphor Dark theme tokens declared in global styles.
+ */
 
 const links = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/leads', label: 'Leads Directory' },
-  { to: '/ai-summary', label: 'AI Summary' },
-] as const
+  { to: "/dashboard", label: "Dashboard" },
+  { to: "/leads", label: "Leads Directory" },
+  { to: "/ai-summary", label: "AI Summary" },
+] as const;
 
 export function AppShell({ children }: { children?: React.ReactNode }) {
   return (
@@ -30,7 +37,10 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
               </p>
             </div>
           </div>
-          <nav aria-label="Primary" className="flex flex-wrap items-center gap-3">
+          <nav
+            aria-label="Primary"
+            className="flex flex-wrap items-center gap-3"
+          >
             {links.map((link) => (
               <Link
                 key={link.to}
@@ -38,7 +48,7 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
                 className="bg-[var(--color-surface)] px-4 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-muted)] shadow-[inset_0_0_0_1px_rgba(132,150,126,0.16)] transition hover:bg-[var(--color-surface-high)] hover:text-[var(--color-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary-container)]"
                 activeProps={{
                   className:
-                    'bg-[var(--color-surface-highest)] px-4 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-primary)] shadow-[-4px_0_0_0_var(--color-primary-container)_inset]',
+                    "bg-[var(--color-surface-highest)] px-4 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-primary)] shadow-[-4px_0_0_0_var(--color-primary-container)_inset]",
                 }}
               >
                 [{link.label}]
@@ -47,9 +57,12 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
           </nav>
         </div>
       </header>
-      <main id="main-content" className="mx-auto max-w-[1400px] px-6 py-10 lg:py-14">
+      <main
+        id="main-content"
+        className="mx-auto max-w-[1400px] px-6 py-10 lg:py-14"
+      >
         {children}
       </main>
     </div>
-  )
+  );
 }

@@ -1,5 +1,15 @@
+/**
+ * Footer.tsx
+ * Renders legacy marketing footer content, current year, and external TanStack links.
+ * Assumes shared theme tokens and utility classes are available globally.
+ */
 export default function Footer() {
-  const year = new Date().getFullYear()
+  /**
+   * Renders footer branding and social links.
+   *
+   * @returns {JSX.Element} Footer markup for the legacy starter layout.
+   */
+  const year = new Date().getFullYear();
 
   return (
     <footer className="mt-20 border-t border-[var(--line)] px-4 pb-14 pt-10 text-[var(--sea-ink-soft)]">
@@ -40,5 +50,5 @@ export default function Footer() {
         </a>
       </div>
     </footer>
-  )
+  );
 }

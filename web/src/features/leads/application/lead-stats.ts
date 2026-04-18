@@ -1,5 +1,11 @@
 import { type Lead, type LeadSource, leadSources } from "../domain/lead";
 
+/**
+ * lead-stats.ts
+ * Computes aggregate metrics that drive dashboard summaries and charts.
+ * Assumes lead timestamps use ISO strings and source order defines tie-breaking.
+ */
+
 const DAYS_IN_WEEK_WINDOW = 7;
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const DEFAULT_TOP_SOURCE: LeadSource = "instagram";
@@ -13,6 +19,12 @@ export type LeadStats = {
 };
 
 /**
+ * Builds all dashboard-ready metrics from a lead collection.
+ *
+ * @param {Lead[]} leads - Lead records included in the current analysis set.
+ * @param {string} referenceDate - ISO date string used as trailing-window anchor.
+ * @returns {LeadStats} Aggregate totals, averages, and source breakdowns.
+ *
  * Builds the dashboard metrics derived from a list of leads.
  */
 export function buildLeadStats(
@@ -44,6 +56,13 @@ export function buildLeadStats(
 }
 
 /**
+ * Counts leads created inside an inclusive trailing day window.
+ *
+ * @param {Lead[]} leads - Lead records to inspect.
+ * @param {string} referenceDate - ISO date string for the window end.
+ * @param {number} days - Window size measured in whole days.
+ * @returns {number} Number of leads inside the requested period.
+ *
  * Counts how many leads were created within the inclusive trailing day window.
  */
 function countLeadsInLastDays(
@@ -54,6 +73,8 @@ function countLeadsInLastDays(
   const rangeEnd = new Date(`${referenceDate}T23:59:59.999Z`).getTime();
   const rangeStart = rangeEnd - (days - 1) * MILLISECONDS_PER_DAY;
 
+  // Inclusive range boundaries match reporting expectations: any lead created
+  // during start or end day still counts in the weekly window.
   return leads.filter((lead) => {
     const createdAt = new Date(lead.createdAt).getTime();
     return createdAt >= rangeStart && createdAt <= rangeEnd;
@@ -61,6 +82,11 @@ function countLeadsInLastDays(
 }
 
 /**
+ * Builds per-source totals with every known source present in the output.
+ *
+ * @param {Lead[]} leads - Lead records to aggregate.
+ * @returns {Record<LeadSource, number>} Deterministic source totals object.
+ *
  * Produces a deterministic source breakdown for charts and summaries.
  */
 function buildLeadsBySource(leads: Lead[]): Record<LeadSource, number> {
@@ -80,6 +106,11 @@ function buildLeadsBySource(leads: Lead[]): Record<LeadSource, number> {
 }
 
 /**
+ * Selects top source while preserving declared source order on ties.
+ *
+ * @param {Record<LeadSource, number>} leadsBySource - Aggregated source totals.
+ * @returns {LeadSource} Dominant source after deterministic tie-breaking.
+ *
  * Selects the most frequent source, preserving deterministic fallback order.
  */
 function selectTopSource(

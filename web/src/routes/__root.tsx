@@ -1,4 +1,10 @@
-import { QueryClientProvider } from '@tanstack/react-query'
+/**
+ * __root.tsx
+ * Declares the TanStack root route, document frame, shared providers, and
+ * shell composition for all pages. Depends on TanStack Router, TanStack Query,
+ * and global CSS loaded through the route head.
+ */
+import { QueryClientProvider } from "@tanstack/react-query";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import {
   createRootRoute,
@@ -10,13 +16,13 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 // Components
 import { AppShell } from "../components/app-shell/app-shell";
-import { createQueryClient } from '../lib/query-client'
+import { createQueryClient } from "../lib/query-client";
 
 // Styles
 import appCss from "../styles.css?url";
 
 const isTestEnvironment = import.meta.env.MODE === "test";
-const queryClient = createQueryClient()
+const queryClient = createQueryClient();
 
 export const Route = createRootRoute({
   head: () => ({
@@ -44,6 +50,9 @@ export const Route = createRootRoute({
   component: RootComponent,
 });
 
+/**
+ * Composes the root document wrapper, query provider, and shared shell.
+ */
 function RootComponent() {
   return (
     <RootDocument>
@@ -56,14 +65,26 @@ function RootComponent() {
   );
 }
 
+/**
+ * Selects a full document wrapper in runtime environments and a fragment in tests.
+ *
+ * @param {{ children: React.ReactNode }} props - Root route content.
+ * @returns {JSX.Element} Fragment in tests or full document frame elsewhere.
+ */
 function RootDocument({ children }: { children: React.ReactNode }) {
   if (isTestEnvironment) {
+    // Tests render into a div container; returning `<html>` there causes React
+    // nesting warnings unrelated to actual runtime behavior.
     return <>{children}</>;
   }
 
   return <DocumentFrame>{children}</DocumentFrame>;
 }
 
+/**
+ * Renders the outer HTML document used by TanStack Start at runtime.
+ *
+ */
 export function DocumentFrame({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
