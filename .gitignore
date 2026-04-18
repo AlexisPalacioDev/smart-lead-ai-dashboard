@@ -52,3 +52,6 @@ out/
 .nuxt/
 tmp/
 temp/
+
+# Ignored documentation
+docs/ignored_docs/
