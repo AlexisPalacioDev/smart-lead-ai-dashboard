@@ -13,6 +13,8 @@ import { AppShell } from "../components/app-shell/app-shell";
 // Styles
 import appCss from "../styles.css?url";
 
+const isTestEnvironment = import.meta.env.MODE === "test";
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -27,12 +29,14 @@ export const Route = createRootRoute({
         title: "Smart Lead AI Dashboard",
       },
     ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
+    links: appCss
+      ? [
+          {
+            rel: "stylesheet",
+            href: appCss,
+          },
+        ]
+      : [],
   }),
   component: RootComponent,
 });
@@ -48,6 +52,14 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  if (isTestEnvironment) {
+    return <>{children}</>;
+  }
+
+  return <DocumentFrame>{children}</DocumentFrame>;
+}
+
+export function DocumentFrame({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>

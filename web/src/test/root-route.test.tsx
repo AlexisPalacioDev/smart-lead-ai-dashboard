@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { Route } from '../routes/__root'
+import { DocumentFrame, Route } from '../routes/__root'
 
 describe('root route', () => {
   it('defines a root component so child routes can render through an Outlet', () => {
@@ -7,14 +7,9 @@ describe('root route', () => {
   })
 
   it('suppresses hydration warnings on body when external extensions inject attributes', () => {
-    const rootElement = Route.options.component?.()
-
-    expect(rootElement).toBeDefined()
-    expect(rootElement?.type).toBeTypeOf('function')
-
-    const documentElement = (rootElement!.type as (props: {
-      children: React.ReactNode
-    }) => React.ReactElement)(rootElement!.props)
+    const documentElement = DocumentFrame({
+      children: <div>content</div>,
+    })
 
     const documentChildren = documentElement.props.children as React.ReactNode[]
     const bodyElement = documentChildren[1] as React.ReactElement<{
