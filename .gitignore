@@ -52,6 +52,8 @@ out/
 .nuxt/
 tmp/
 temp/
+.superpowers/
 
 # Ignored documentation
 docs/ignored_docs/
+docs/superpowers/
