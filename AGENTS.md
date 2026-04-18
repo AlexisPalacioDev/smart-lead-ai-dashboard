@@ -1,0 +1,144 @@
+# Development Guidelines
+
+## 🌐 Language Standards
+
+- **All comments**: Written in English
+- **Commit messages**: Written in English, following existing repository style
+- **Documentation**: Written in English
+
+## 🎯 Core Development Principles
+
+1. **Simplicity First**: Write clean, simple, and readable code
+2. **Minimalist Approach**: Implement features in the simplest way possible
+3. **File Organization**: Keep files small and focused (< 200 lines)
+4. **Premature Optimization**: Focus on core functionality before optimizing
+5. **Naming Conventions**: Use clear, consistent, and descriptive naming
+6. **Think Before Code**: Write 2-3 reasoning paragraphs before implementation
+7. **Modularity**: Always write modular, reusable code components
+
+## 📝 Code Standards
+
+### Naming Conventions
+
+- **Variables**: Use descriptive names with auxiliary verbs (e.g., `isLoading`, `hasError`, `canSubmit`)
+- **Event Handlers**: Prefix with "handle" (e.g., `handleClick`, `handleSubmit`, `handleKeyDown`)
+- **Constants**: Use UPPER_SNAKE_CASE for constants (e.g., `MAX_RETRY_COUNT`, `API_TIMEOUT`)
+- **Functions**: Use camelCase with action verbs (e.g., `getUserData`, `calculateTotal`)
+
+### Code Structure
+
+1. **Early Returns**: Utilize early returns to avoid deep nesting
+2. **Constants Over Functions**: Prefer constants when functions aren't necessary
+3. **DRY Principle**: Don't Repeat Yourself - extract common logic
+4. **Functional Programming**: Prefer immutable, functional style when practical
+5. **Minimal Changes**: Only modify code directly related to the task
+6. **No Magic Numbers**: Replace hardcoded values with named constants
+7. **Type Safety**: Use TypeScript interfaces/types or JSDoc for type documentation
+8. **Error Boundaries**: Always implement proper error handling
+
+### Function Organization
+
+- Order functions by dependency: composing functions appear before composed ones
+- Group related functions together
+- Place utility functions at the top or in separate files
+
+## 🐛 Error Handling & Debugging
+
+### Investigation Process
+
+1. **Don't Jump to Conclusions**: Consider multiple possible causes
+2. **Verify Assumptions**: Always test your hypotheses
+3. **Root Cause Analysis**: Find and fix the actual problem, not symptoms
+4. **Keep It Simple**: Avoid overcomplicating solutions
+5. **Minimal Changes**: Fix with the least amount of code changes
+
+### Error Response Strategy
+
+- Never ignore errors - investigate and handle appropriately
+- Add meaningful error messages for debugging
+- Log errors with context for troubleshooting
+- For unknown errors, suggest web search for latest solutions
+
+## 📚 Documentation Standards
+
+### Comment Guidelines
+
+1. **Preservation**: Never delete comments unless obsolete or incorrect
+2. **Descriptive Comments**: Be thorough when explaining complex logic
+3. **Language**: Always write comments in English
+4. **Function Documentation**: Add JSDoc comments for all functions
+
+### TODO Comments
+
+- Mark known issues or improvements: `// TODO: Optimize this query for large datasets`
+- Include context and potential solutions when possible
+
+## 🧪 Testing Guidelines
+
+### General Testing Principles
+
+1. **Consistency**: Maintain uniform testing patterns across the project
+2. **AAA Pattern**: Use Arrange, Act, Assert structure
+3. **Descriptive Tests**: Use clear test descriptions that explain the scenario
+4. **Grouping**: Use `describe` blocks to organize related tests
+
+### React Testing Best Practices
+
+1. **Destructure render**: Avoid using `screen` object
+
+   ```javascript
+   // Good
+   const { findByTestId, getByRole } = render(<Component />);
+
+   // Avoid
+   render(<Component />);
+   const button = screen.getByRole('button');
+   ```
+
+2. **User Events**: Prefer `userEvent` over `fireEvent` for more realistic interactions
+3. **Hook Testing**: Use `renderHook` from react-hooks-testing-library
+
+### Test Documentation
+
+- Add comments explaining complex test scenarios
+- Document test data setup and expectations
+- Include links to relevant documentation when needed
+
+## 🚀 Best Practices Summary
+
+1. **Clarity over Cleverness**: Write code that junior developers can understand
+2. **Explicit over Implicit**: Use descriptive names instead of abbreviations
+3. **Consistency**: Follow existing patterns in the codebase
+4. **Modularity**: Create reusable, single-purpose functions
+5. **Documentation**: Comment complex logic, not obvious code
+6. **Testing**: Write tests that serve as documentation
+7. **Error Handling**: Fail gracefully with helpful error messages
+8. **Performance**: Optimize only after measuring actual bottlenecks
+
+## 📋 Quick Checklist
+
+Before submitting code, ensure:
+
+- [ ] All comments and commits are in English
+- [ ] Functions are under 200 lines
+- [ ] Complex logic has explanatory comments
+- [ ] Error boundaries are implemented
+- [ ] Tests follow AAA pattern
+- [ ] No magic numbers in code
+- [ ] DRY principle is followed
+- [ ] Code changes are minimal and focused
+- [ ] Testing instructions are provided
+
+## Commit & Pull Request Guidelines
+
+Follow the existing Conventional Commit pattern seen in history: `docs: ...`, `chore(config): ...`. Keep subjects short and specific.
+
+Pull requests should include:
+
+- a short summary of what changed and why
+- the affected paths under `docs/`
+- screenshots only when visual reference assets or Stitch-derived material changed
+
+## Agent-Specific Notes
+
+For library, framework, SDK, API, CLI, or cloud-service questions, use `ctx7` first: resolve the library with `npx ctx7@latest library ...`, then fetch docs with `npx ctx7@latest docs ...`.
