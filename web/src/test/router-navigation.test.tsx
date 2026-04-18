@@ -8,6 +8,12 @@ import {
 import { describe, expect, it } from 'vitest'
 import { routeTree } from '../routeTree.gen'
 
+/**
+ * router-navigation.test.tsx
+ * Covers a real route transition through the generated router tree.
+ * Assumes route copy remains stable enough for accessible-role assertions.
+ */
+
 describe('router navigation', () => {
   it('renders the leads page after clicking Leads Directory', async () => {
     const user = userEvent.setup()

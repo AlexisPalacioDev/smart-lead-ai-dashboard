@@ -1,8 +1,14 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/leads')({
+/**
+ * leads.tsx
+ * Registers the Leads Directory placeholder route before the operational table
+ * and modal CRUD flows are implemented. Depends on shared shell styling.
+ */
+
+export const Route = createFileRoute("/leads")({
   component: LeadsPage,
-})
+});
 
 function LeadsPage() {
   return (
@@ -43,5 +49,5 @@ function LeadsPage() {
         </article>
       </div>
     </section>
-  )
+  );
 }

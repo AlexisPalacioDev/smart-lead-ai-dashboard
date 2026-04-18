@@ -8,6 +8,18 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { routeTree } from '../routeTree.gen'
 
+/**
+ * route-placeholders.test.tsx
+ * Verifies placeholder routes expose the intended technical copy and actions.
+ * Assumes route tree generation stays current with files under `src/routes`.
+ */
+
+/**
+ * Renders a route entry with an in-memory router for integration-style assertions.
+ *
+ * @param {string} entry - Route path to mount as the initial history entry.
+ * @returns {ReturnType<typeof render>} Testing Library render result.
+ */
 function renderRoute(entry: string) {
   const history = createMemoryHistory({
     initialEntries: [entry],

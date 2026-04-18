@@ -1,9 +1,19 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/ai-summary')({
+/**
+ * ai-summary.tsx
+ * Registers the AI Summary route placeholder used before full AI integration.
+ * Depends on the shared shell and Phosphor Dark utility classes for layout.
+ */
+
+export const Route = createFileRoute("/ai-summary")({
   component: AISummaryPage,
-})
+});
 
+/**
+ * Renders the AI Summary placeholder route.
+ *
+ */
 function AISummaryPage() {
   return (
     <section className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -18,7 +28,10 @@ function AISummaryPage() {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Link className="terminal-link terminal-link--primary" to="/ai-summary">
+          <Link
+            className="terminal-link terminal-link--primary"
+            to="/ai-summary"
+          >
             [ GENERATE SUMMARY ]
           </Link>
           <Link className="terminal-link" to="/leads">
@@ -41,5 +54,5 @@ function AISummaryPage() {
         </div>
       </article>
     </section>
-  )
+  );
 }

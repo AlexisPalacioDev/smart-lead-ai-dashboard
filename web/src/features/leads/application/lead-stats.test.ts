@@ -1,8 +1,19 @@
+/**
+ * lead-stats.test.ts
+ * Covers tie-breaking and empty-state behavior for dashboard metric helpers.
+ * Uses compact fixture builders so expectations stay focused on edge cases.
+ */
 import { describe, expect, it } from "vitest";
 
 import type { Lead } from "../domain/lead";
 import { buildLeadStats } from "./lead-stats";
 
+/**
+ * Creates a minimal lead fixture with override support for isolated tests.
+ *
+ * @param {Partial<Lead>} overrides - Field overrides for each test scenario.
+ * @returns {Lead} Fully shaped lead fixture.
+ */
 const buildLead = (overrides: Partial<Lead>): Lead => ({
   id: "lead-1",
   name: "Jane Doe",

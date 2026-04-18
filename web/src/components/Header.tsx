@@ -1,7 +1,17 @@
-import { Link } from '@tanstack/react-router'
-import ThemeToggle from './ThemeToggle'
+import { Link } from "@tanstack/react-router";
+import ThemeToggle from "./ThemeToggle";
 
+/**
+ * Header.tsx
+ * Renders the legacy starter header with navigation, external links, and theme toggle.
+ * Depends on TanStack Router links and global theme utility classes.
+ */
 export default function Header() {
+  /**
+   * Renders the top navigation bar used by the starter layout.
+   *
+   * @returns {JSX.Element} Header markup with internal and external navigation.
+   */
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4 backdrop-blur-lg">
       <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
@@ -52,14 +62,14 @@ export default function Header() {
           <Link
             to="/"
             className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
+            activeProps={{ className: "nav-link is-active" }}
           >
             Home
           </Link>
           <Link
             to="/about"
             className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
+            activeProps={{ className: "nav-link is-active" }}
           >
             About
           </Link>
@@ -74,5 +84,5 @@ export default function Header() {
         </div>
       </nav>
     </header>
-  )
+  );
 }

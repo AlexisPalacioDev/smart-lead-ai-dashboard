@@ -1,9 +1,20 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/dashboard')({
+/**
+ * dashboard.tsx
+ * Registers the dashboard placeholder route until KPI and chart components land.
+ * Depends on the shared shell and visual tokens from the global stylesheet.
+ */
+
+export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
-})
+});
 
+/**
+ * Renders the dashboard placeholder route.
+ *
+ * @returns {JSX.Element} Analytical landing page placeholder for dashboard work.
+ */
 function DashboardPage() {
   return (
     <section className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.7fr)]">
@@ -43,5 +54,5 @@ function DashboardPage() {
         </article>
       </aside>
     </section>
-  )
+  );
 }
