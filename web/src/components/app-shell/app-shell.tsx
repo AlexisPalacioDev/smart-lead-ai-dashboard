@@ -57,12 +57,7 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
           </nav>
         </div>
       </header>
-      <main
-        id="main-content"
-        className="mx-auto max-w-[1400px] px-6 py-10 lg:py-14"
-      >
-        {children}
-      </main>
+      {children}
     </div>
   );
 }
