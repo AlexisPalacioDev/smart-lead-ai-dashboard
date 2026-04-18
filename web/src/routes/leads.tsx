@@ -3,30 +3,27 @@
  * Defines Leads Directory route rendering for loading, error, empty, and table
  * states. Business rules live in lead application ViewModel hooks and builders.
  */
-import { startTransition, type ReactNode } from "react";
+import { startTransition, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { LeadsFilters } from "../components/leads/leads-filters";
-import { LeadsTable } from "../components/leads/leads-table";
+import {
+  LeadCrudModals,
+  type LeadModalState,
+} from "../components/leads/lead-crud-modals";
+import { LeadsPage, LeadsScaffold } from "../components/leads/leads-page";
 import { EmptyState } from "../components/ui/empty-state";
 import { ErrorState } from "../components/ui/error-state";
 import { LoadingState } from "../components/ui/loading-state";
-import { PageHeader } from "../components/ui/page-header";
 import {
   DEFAULT_LEADS_DIRECTORY_SEARCH,
 } from "../features/leads/application/build-leads-directory-view-model";
 import {
-  useLeadsDirectoryPageViewModel,
   useLeadsDirectoryRouteViewModel,
   type UpdateLeadsDirectorySearch,
 } from "../features/leads/application/use-leads-directory-view-model";
 import { leadSources } from "../features/leads/domain/lead";
-import type {
-  LeadsDirectoryHeaderViewModel,
-  LeadsDirectoryPageProps,
-  LeadsDirectorySearch,
-} from "../features/leads/types/leads-directory-view-model";
+import type { LeadsDirectorySearch } from "../features/leads/types/leads-directory-view-model";
 
 const leadSourceFilterValues = ["all", ...leadSources] as const;
 
@@ -55,6 +52,9 @@ export const Route = createFileRoute("/leads")({
  * @returns {JSX.Element} Loading, error, empty, or populated Leads Directory.
  */
 function LeadsRoute() {
+  const [modalState, setModalState] = useState<LeadModalState>({
+    type: "closed",
+  });
   const search = Route.useSearch() as LeadsDirectorySearch;
   const navigate = Route.useNavigate();
   const updateSearch: UpdateLeadsDirectorySearch = (next) => {
@@ -116,78 +116,28 @@ function LeadsRoute() {
   }
 
   return (
-    <LeadsPage
-      viewModel={viewModel.directory}
-      onFilterChange={viewModel.updateFilters}
-      onPageChange={viewModel.goToPage}
-    />
-  );
-}
-
-/**
- * Renders populated Leads Directory using injected or default ViewModel state.
- *
- * @param {LeadsDirectoryPageProps} props - Optional page state and handlers.
- * @returns {JSX.Element} Filter toolbar, result summary, and leads table.
- */
-export function LeadsPage({
-  viewModel,
-  onFilterChange = () => {},
-  onPageChange = () => {},
-}: LeadsDirectoryPageProps) {
-  const pageViewModel = useLeadsDirectoryPageViewModel({ viewModel });
-
-  return (
-    <LeadsScaffold
-      header={pageViewModel.header}
-      body={
-        <>
-          <LeadsFilters
-            filters={pageViewModel.filters}
-            onChange={onFilterChange}
-          />
-          <p className="terminal-eyebrow">{pageViewModel.resultSummary}</p>
-          <LeadsTable
-            rows={pageViewModel.rows}
-            pagination={pageViewModel.pagination}
-            onSelectLead={() => {}}
-            onPageChange={onPageChange}
-          />
-        </>
-      }
-    />
-  );
-}
-
-/**
- * Wraps Leads Directory body content with stable page header chrome.
- *
- * @param {{ header: LeadsDirectoryHeaderViewModel; body: ReactNode }} props -
- * Header metadata and state-specific body.
- * @returns {JSX.Element} Shared route layout.
- */
-function LeadsScaffold({
-  header,
-  body,
-}: {
-  header: LeadsDirectoryHeaderViewModel;
-  body: ReactNode;
-}) {
-  return (
-    <section className="space-y-8">
-      <PageHeader
-        title={header.title}
-        description={header.description}
-        actions={
-          <button
-            type="button"
-            className="terminal-link terminal-link--primary"
-          >
-            [{header.actionLabel}]
-          </button>
-        }
+    <>
+      <LeadsPage
+        viewModel={viewModel.directory}
+        onFilterChange={viewModel.updateFilters}
+        onPageChange={viewModel.goToPage}
+        onCreateLead={() => setModalState({ type: "create" })}
+        onSelectLead={(leadId) => setModalState({ type: "detail", leadId })}
+        onEditLead={(leadId) => setModalState({ type: "edit", leadId })}
+        onDeleteLead={(leadId) => setModalState({ type: "delete", leadId })}
       />
-      {body}
-    </section>
+      <LeadCrudModals
+        modalState={modalState}
+        leads={viewModel.leads}
+        isMutating={viewModel.isMutating}
+        mutationError={viewModel.mutationError}
+        onClose={() => setModalState({ type: "closed" })}
+        onEditLead={(leadId) => setModalState({ type: "edit", leadId })}
+        onDeleteLead={(leadId) => setModalState({ type: "delete", leadId })}
+        onCreateLead={viewModel.createLead}
+        onUpdateLead={viewModel.updateLead}
+        onConfirmDelete={viewModel.deleteLead}
+      />
+    </>
   );
 }

@@ -13,6 +13,8 @@ type LeadsTableProps = {
   rows: LeadsDirectoryRowViewModel[];
   pagination: LeadsDirectoryPaginationViewModel;
   onSelectLead: (leadId: string) => void;
+  onEditLead: (leadId: string) => void;
+  onDeleteLead: (leadId: string) => void;
   onPageChange: (page: number) => void;
 };
 
@@ -26,6 +28,8 @@ export function LeadsTable({
   rows,
   pagination,
   onSelectLead,
+  onEditLead,
+  onDeleteLead,
   onPageChange,
 }: LeadsTableProps) {
   return (
@@ -37,7 +41,7 @@ export function LeadsTable({
         </p>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[980px] table-fixed text-left" aria-label="Tabla de leads">
+        <table className="w-full min-w-[1100px] table-fixed text-left" aria-label="Tabla de leads">
           <thead className="bg-[var(--color-surface-lowest)] text-xs uppercase tracking-[0.16em] text-[var(--color-muted)]">
             <tr>
               <th className="px-5 py-4 font-bold">Nombre</th>
@@ -49,12 +53,13 @@ export function LeadsTable({
               <th className="px-5 py-4 font-bold" aria-sort="descending">
                 Fecha
               </th>
+              <th className="px-5 py-4 font-bold">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[color:rgba(224,226,233,0.06)]">
             {rows.length === 0 ? (
               <tr>
-                <td className="px-5 py-8 text-sm text-[var(--color-muted)]" colSpan={7}>
+                <td className="px-5 py-8 text-sm text-[var(--color-muted)]" colSpan={8}>
                   No hay leads para los filtros actuales.
                 </td>
               </tr>
@@ -86,6 +91,24 @@ export function LeadsTable({
                     >
                       [{lead.createdAtLabel}]
                     </button>
+                  </td>
+                  <td className="px-5 py-4">
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => onEditLead(lead.id)}
+                        className="terminal-link px-2 py-1"
+                      >
+                        [EDIT]
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onDeleteLead(lead.id)}
+                        className="terminal-link px-2 py-1 text-[var(--color-danger)]"
+                      >
+                        [DEL]
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
