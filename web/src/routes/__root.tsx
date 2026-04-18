@@ -1,3 +1,4 @@
+import { QueryClientProvider } from '@tanstack/react-query'
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import {
   createRootRoute,
@@ -9,11 +10,13 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 // Components
 import { AppShell } from "../components/app-shell/app-shell";
+import { createQueryClient } from '../lib/query-client'
 
 // Styles
 import appCss from "../styles.css?url";
 
 const isTestEnvironment = import.meta.env.MODE === "test";
+const queryClient = createQueryClient()
 
 export const Route = createRootRoute({
   head: () => ({
@@ -44,9 +47,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <AppShell>
-        <Outlet />
-      </AppShell>
+      <QueryClientProvider client={queryClient}>
+        <AppShell>
+          <Outlet />
+        </AppShell>
+      </QueryClientProvider>
     </RootDocument>
   );
 }
