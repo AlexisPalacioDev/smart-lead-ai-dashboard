@@ -114,7 +114,9 @@ web/src/
 
   components/
     dashboard/
+      kpi-grid.tsx
     ui/
+      page-header.tsx
 
   features/
     dashboard/
