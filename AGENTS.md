@@ -16,6 +16,18 @@
 6. **Think Before Code**: Write 2-3 reasoning paragraphs before implementation
 7. **Modularity**: Always write modular, reusable code components
 
+## 🧭 Repository Structure Convention
+
+- Follow a feature-first flexible structure across the repo.
+- routes compose screens; they should not own business rules, large builders, or shared feature contracts.
+- `components/` hold reusable presentational UI.
+- `features/<feature>/application` holds hooks, ViewModels, builders, selectors, and feature orchestration.
+- `features/<feature>/domain` holds framework-agnostic business rules when needed.
+- `features/<feature>/infrastructure` holds external adapters when needed.
+- `features/<feature>/types` should exist only when extracted types improve clarity or are shared across multiple files.
+- avoid generic `utils/` directories by default; prefer intention-revealing names like `builders`, `selectors`, `formatters`, or `mappers`.
+- Keep files small and focused; treat files above 200 lines as a refactor signal.
+
 ## 📝 Code Standards
 
 ### Naming Conventions
