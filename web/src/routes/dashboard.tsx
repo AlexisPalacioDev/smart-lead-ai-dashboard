@@ -15,15 +15,14 @@ import { ErrorState } from "../components/ui/error-state";
 import { LoadingState } from "../components/ui/loading-state";
 import { PageHeader } from "../components/ui/page-header";
 import type {
-  DashboardPageProps,
   DashboardHeaderViewModel,
-} from "../features/dashboard/application/dashboard-view-model";
+  DashboardPageProps,
+} from "../features/dashboard/types/dashboard-view-model";
 import {
   useDashboardHeaderViewModel as useDashboardHeaderViewModelHook,
   useDashboardPageViewModel,
   useDashboardRouteViewModel,
 } from "../features/dashboard/application/use-dashboard-view-model";
-import { leadFixtures } from "../features/leads/infrastructure/lead-fixtures";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardRoute,
@@ -93,10 +92,10 @@ function DashboardRoute() {
  * @returns {JSX.Element} Dashboard with KPIs, charts, and recent activity.
  */
 export function DashboardPage({
-  leads = leadFixtures,
+  leads,
   viewModel,
 }: DashboardPageProps) {
-  const dashboardViewModel = useDashboardPageViewModel(leads, viewModel);
+  const dashboardViewModel = useDashboardPageViewModel({ leads, viewModel });
   const headerViewModel = useDashboardHeaderViewModelHook();
 
   return (

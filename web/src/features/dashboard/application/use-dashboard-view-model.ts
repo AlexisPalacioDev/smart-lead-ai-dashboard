@@ -1,14 +1,15 @@
 /** Centralizes dashboard route behavior and presentation-ready metrics. */
 import { useQuery } from "@tanstack/react-query";
 import { createLeadUseCases } from "../../leads/application/lead-use-cases";
-import type { Lead } from "../../leads/domain/lead";
+import { leadFixtures } from "../../leads/infrastructure/lead-fixtures";
 import { createLeadsRepository } from "../../leads/infrastructure/leads-repository";
 import { buildDashboardViewModel } from "./build-dashboard-view-model";
 import type {
   DashboardHeaderViewModel,
+  DashboardPageProps,
   DashboardRouteViewModel,
   DashboardViewModel,
-} from "./dashboard-view-model";
+} from "../types/dashboard-view-model";
 const DASHBOARD_QUERY_KEY = ["leads", "dashboard"] as const;
 const leadUseCases = createLeadUseCases(createLeadsRepository());
 
@@ -73,13 +74,13 @@ export function useDashboardHeaderViewModel(): DashboardHeaderViewModel {
 /**
  * Supplies dashboard display data from either precomputed state or raw leads.
  *
- * @param {Lead[]} leads - Lead collection used when no ViewModel is injected.
- * @param {DashboardViewModel | undefined} viewModel - Optional prebuilt state.
+ * @param {DashboardPageProps} props - Optional lead set or injected ViewModel.
  * @returns {DashboardViewModel} Dashboard data ready for presentational components.
  */
 export function useDashboardPageViewModel(
-  leads: Lead[],
-  viewModel?: DashboardViewModel,
+  props: DashboardPageProps,
 ): DashboardViewModel {
-  return viewModel ?? buildDashboardViewModel(leads);
+  const leads = props.leads?.length ? props.leads : leadFixtures;
+
+  return props.viewModel ?? buildDashboardViewModel(leads);
 }
