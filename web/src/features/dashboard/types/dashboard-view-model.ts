@@ -1,15 +1,15 @@
 /**
  * dashboard-view-model.ts
- * Declares shared dashboard ViewModel types consumed by route and application
- * hooks.
- * Depends on dashboard presentation contracts such as KPI cards and trend points.
+ * Declares shared dashboard view-model contracts consumed by route and
+ * application files.
+ * Depends on dashboard presentation contracts and lead entity typing.
  */
 import type { KpiCard } from "../../../components/dashboard/kpi-grid";
 import type { LeadsTrendPoint } from "../../../components/dashboard/leads-trend-chart";
 import type { Lead } from "../../leads/domain/lead";
 
 /**
- * Compact recent-activity row shown on dashboard feed.
+ * Compact recent-activity row shown in the dashboard feed.
  */
 export type DashboardRecentActivityItem = {
   id: string;
@@ -48,7 +48,7 @@ export type DashboardHeaderViewModel = {
 };
 
 /**
- * Route-level async state consumed by dashboard route renderer.
+ * Route-level async state consumed by the dashboard route renderer.
  */
 export type DashboardRouteViewModel =
   | { status: "loading"; header: DashboardHeaderViewModel }
@@ -61,7 +61,7 @@ export type DashboardRouteViewModel =
     };
 
 /**
- * Optional props for rendering populated dashboard with injected state.
+ * Optional props for rendering the populated dashboard with injected state.
  */
 export type DashboardPageProps = {
   leads?: Lead[];

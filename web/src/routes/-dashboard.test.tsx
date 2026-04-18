@@ -44,4 +44,11 @@ describe("DashboardRoute", () => {
     expect(screen.getByText(/leads por fuente/i)).toBeInTheDocument();
     expect(screen.getByText(/tendencia reciente/i)).toBeInTheDocument();
   });
+
+  it("renders the dashboard through extracted feature types and view models", async () => {
+    renderDashboard();
+
+    expect(await screen.findByText(/actividad reciente/i)).toBeInTheDocument();
+    expect(screen.getByText(/ana torres/i)).toBeInTheDocument();
+  });
 });

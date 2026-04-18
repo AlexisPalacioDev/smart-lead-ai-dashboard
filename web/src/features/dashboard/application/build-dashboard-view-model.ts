@@ -10,9 +10,8 @@ import {
   leadSources,
 } from "../../leads/domain/lead";
 import type { LeadsTrendPoint } from "../../../components/dashboard/leads-trend-chart";
-import type { DashboardViewModel } from "./dashboard-view-model";
+import type { DashboardViewModel } from "../types/dashboard-view-model";
 
-const DEFAULT_REFERENCE_DATE = "2026-04-18";
 const DAYS_IN_TREND_WINDOW = 7;
 
 const SOURCE_LABELS: Record<LeadSource, string> = {
@@ -83,11 +82,13 @@ export function buildDashboardViewModel(leads: Lead[]): DashboardViewModel {
  * @returns {string} ISO date string used as summary anchor.
  */
 function selectReferenceDate(leads: Lead[]): string {
-  return leads.length === 0
-    ? DEFAULT_REFERENCE_DATE
-    : [...leads]
-        .sort((left, right) => right.createdAt.localeCompare(left.createdAt))[0]
-        .createdAt.slice(0, 10);
+  if (leads.length === 0) {
+    return getTodayIsoDate();
+  }
+
+  return [...leads]
+    .sort((left, right) => right.createdAt.localeCompare(left.createdAt))[0]
+    .createdAt.slice(0, 10);
 }
 
 /**
@@ -135,4 +136,13 @@ function shiftIsoDate(isoDate: string, offsetDays: number): string {
   const nextDate = new Date(`${isoDate}T00:00:00.000Z`);
   nextDate.setUTCDate(nextDate.getUTCDate() + offsetDays);
   return nextDate.toISOString().slice(0, 10);
+}
+
+/**
+ * Returns the current UTC date in `YYYY-MM-DD` format.
+ *
+ * @returns {string} UTC calendar date for fallback reporting anchors.
+ */
+function getTodayIsoDate(): string {
+  return new Date().toISOString().slice(0, 10);
 }
