@@ -58,7 +58,12 @@ function RootComponent() {
     <RootDocument>
       <QueryClientProvider client={queryClient}>
         <AppShell>
-          <Outlet />
+          <main
+            id="main-content"
+            className="mx-auto max-w-[1400px] px-6 py-10 lg:py-14"
+          >
+            <Outlet />
+          </main>
         </AppShell>
       </QueryClientProvider>
     </RootDocument>
