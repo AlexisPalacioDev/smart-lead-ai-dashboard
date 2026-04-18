@@ -63,12 +63,18 @@ describe("route placeholders", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders an operational leads placeholder with a create action", async () => {
+  it("renders the operational leads directory with filters and create action", async () => {
     renderRoute("/leads");
 
-    expect(await screen.findByText(/^operations grid$/i)).toBeInTheDocument();
+    expect(await screen.findByText(/^leads directory$/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /\[ new lead \]/i }),
+      await screen.findByRole("searchbox", { name: /buscar lead/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /\[new lead\]/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("table", { name: /tabla de leads/i }),
     ).toBeInTheDocument();
   });
 

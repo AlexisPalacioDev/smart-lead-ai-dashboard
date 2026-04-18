@@ -1,53 +1,193 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-
 /**
  * leads.tsx
- * Registers the Leads Directory placeholder route before the operational table
- * and modal CRUD flows are implemented. Depends on shared shell styling.
+ * Defines Leads Directory route rendering for loading, error, empty, and table
+ * states. Business rules live in lead application ViewModel hooks and builders.
  */
+import { startTransition, type ReactNode } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
 
-export const Route = createFileRoute("/leads")({
-  component: LeadsPage,
+import { LeadsFilters } from "../components/leads/leads-filters";
+import { LeadsTable } from "../components/leads/leads-table";
+import { EmptyState } from "../components/ui/empty-state";
+import { ErrorState } from "../components/ui/error-state";
+import { LoadingState } from "../components/ui/loading-state";
+import { PageHeader } from "../components/ui/page-header";
+import {
+  DEFAULT_LEADS_DIRECTORY_SEARCH,
+} from "../features/leads/application/build-leads-directory-view-model";
+import {
+  useLeadsDirectoryPageViewModel,
+  useLeadsDirectoryRouteViewModel,
+  type UpdateLeadsDirectorySearch,
+} from "../features/leads/application/use-leads-directory-view-model";
+import { leadSources } from "../features/leads/domain/lead";
+import type {
+  LeadsDirectoryHeaderViewModel,
+  LeadsDirectoryPageProps,
+  LeadsDirectorySearch,
+} from "../features/leads/types/leads-directory-view-model";
+
+const leadSourceFilterValues = ["all", ...leadSources] as const;
+
+const leadsSearchSchema = z.object({
+  query: z.string().catch(DEFAULT_LEADS_DIRECTORY_SEARCH.query),
+  source: z
+    .enum(leadSourceFilterValues)
+    .catch(DEFAULT_LEADS_DIRECTORY_SEARCH.source),
+  startDate: z.string().catch(DEFAULT_LEADS_DIRECTORY_SEARCH.startDate),
+  endDate: z.string().catch(DEFAULT_LEADS_DIRECTORY_SEARCH.endDate),
+  page: z.coerce
+    .number()
+    .int()
+    .positive()
+    .catch(DEFAULT_LEADS_DIRECTORY_SEARCH.page),
 });
 
-function LeadsPage() {
+export const Route = createFileRoute("/leads")({
+  validateSearch: leadsSearchSchema,
+  component: LeadsRoute,
+});
+
+/**
+ * Renders route branch state using URL-backed search and repository data.
+ *
+ * @returns {JSX.Element} Loading, error, empty, or populated Leads Directory.
+ */
+function LeadsRoute() {
+  const search = Route.useSearch() as LeadsDirectorySearch;
+  const navigate = Route.useNavigate();
+  const updateSearch: UpdateLeadsDirectorySearch = (next) => {
+    startTransition(() => {
+      void navigate({
+        search: (previous) => ({
+          ...previous,
+          ...next,
+        }),
+      });
+    });
+  };
+  const viewModel = useLeadsDirectoryRouteViewModel(search, updateSearch);
+
+  if (viewModel.status === "loading") {
+    return (
+      <LeadsScaffold
+        header={viewModel.header}
+        body={<LoadingState label="Loading lead register." />}
+      />
+    );
+  }
+
+  if (viewModel.status === "error") {
+    return (
+      <LeadsScaffold
+        header={viewModel.header}
+        body={
+          <ErrorState
+            title="No fue posible cargar los leads."
+            action={
+              <button
+                type="button"
+                onClick={() => viewModel.retry()}
+                className="terminal-link terminal-link--primary"
+              >
+                [REINTENTAR]
+              </button>
+            }
+          />
+        }
+      />
+    );
+  }
+
+  if (viewModel.status === "empty") {
+    return (
+      <LeadsScaffold
+        header={viewModel.header}
+        body={
+          <EmptyState
+            title="No hay leads para mostrar."
+            actionLabel="Recargar"
+            onAction={() => viewModel.retry()}
+          />
+        }
+      />
+    );
+  }
+
   return (
-    <section className="space-y-6">
-      <article className="terminal-panel rise-in space-y-6 p-6 lg:p-10">
-        <div className="space-y-4">
-          <p className="terminal-eyebrow">Operations Grid</p>
-          <h2 className="terminal-heading">Leads Directory</h2>
-          <p className="terminal-copy">
-            This route becomes the operational grid: dense records, fast source
-            filtering, newest-first ordering, and modal CRUD built from the
-            register-lead reference.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <Link className="terminal-link terminal-link--primary" to="/leads">
-            [ NEW LEAD ]
-          </Link>
-          <Link className="terminal-link" to="/ai-summary">
-            [ REVIEW AI ]
-          </Link>
-        </div>
-      </article>
-      <div className="grid gap-4 lg:grid-cols-3">
-        <article className="terminal-metric p-5 lg:col-span-2">
-          <p className="terminal-eyebrow">Table Surface</p>
-          <p className="mt-3 text-sm leading-7 text-[var(--color-foreground)]">
-            Task 7 replaces this placeholder with the high-density leads table,
-            tonal row separation, and modal triggers.
-          </p>
-        </article>
-        <article className="terminal-panel--high p-5">
-          <p className="terminal-eyebrow">Filters</p>
-          <p className="mt-3 text-sm leading-7 text-[var(--color-muted)]">
-            Search, source, and date-range controls will live in a dedicated
-            block above the grid.
-          </p>
-        </article>
-      </div>
+    <LeadsPage
+      viewModel={viewModel.directory}
+      onFilterChange={viewModel.updateFilters}
+      onPageChange={viewModel.goToPage}
+    />
+  );
+}
+
+/**
+ * Renders populated Leads Directory using injected or default ViewModel state.
+ *
+ * @param {LeadsDirectoryPageProps} props - Optional page state and handlers.
+ * @returns {JSX.Element} Filter toolbar, result summary, and leads table.
+ */
+export function LeadsPage({
+  viewModel,
+  onFilterChange = () => {},
+  onPageChange = () => {},
+}: LeadsDirectoryPageProps) {
+  const pageViewModel = useLeadsDirectoryPageViewModel({ viewModel });
+
+  return (
+    <LeadsScaffold
+      header={pageViewModel.header}
+      body={
+        <>
+          <LeadsFilters
+            filters={pageViewModel.filters}
+            onChange={onFilterChange}
+          />
+          <p className="terminal-eyebrow">{pageViewModel.resultSummary}</p>
+          <LeadsTable
+            rows={pageViewModel.rows}
+            pagination={pageViewModel.pagination}
+            onSelectLead={() => {}}
+            onPageChange={onPageChange}
+          />
+        </>
+      }
+    />
+  );
+}
+
+/**
+ * Wraps Leads Directory body content with stable page header chrome.
+ *
+ * @param {{ header: LeadsDirectoryHeaderViewModel; body: ReactNode }} props -
+ * Header metadata and state-specific body.
+ * @returns {JSX.Element} Shared route layout.
+ */
+function LeadsScaffold({
+  header,
+  body,
+}: {
+  header: LeadsDirectoryHeaderViewModel;
+  body: ReactNode;
+}) {
+  return (
+    <section className="space-y-8">
+      <PageHeader
+        title={header.title}
+        description={header.description}
+        actions={
+          <button
+            type="button"
+            className="terminal-link terminal-link--primary"
+          >
+            [{header.actionLabel}]
+          </button>
+        }
+      />
+      {body}
     </section>
   );
 }
