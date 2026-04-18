@@ -14,9 +14,12 @@ import { leadSources } from "./lead";
  * unknown budget as distinct from numeric zero.
  */
 export const leadFormSchema = z.object({
-  name: z.string().trim().min(2, "Name must contain at least 2 characters"),
+  name: z.string().trim().min(1, "Nombre obligatorio"),
   email: z
-    .email({ message: "Email must be valid" })
+    .string()
+    .trim()
+    .min(1, "Email obligatorio")
+    .email("Email invalido")
     .transform((email) => email.trim()),
   phone: z.string().trim(),
   source: z.enum(leadSources),

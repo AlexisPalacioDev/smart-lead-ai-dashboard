@@ -1,4 +1,5 @@
-import type { LeadSource } from "../domain/lead";
+import type { Lead, LeadSource } from "../domain/lead";
+import type { LeadInput } from "../application/lead-ports";
 
 /**
  * leads-directory-view-model.ts
@@ -106,9 +107,15 @@ export type LeadsDirectoryRouteViewModel =
     }
   | {
       status: "ready";
+      leads: Lead[];
       directory: LeadsDirectoryViewModel;
       updateFilters: (next: LeadsDirectoryFilterChange) => void;
       goToPage: (page: number) => void;
+      createLead: (input: LeadInput) => Promise<void>;
+      updateLead: (id: string, input: LeadInput) => Promise<void>;
+      deleteLead: (id: string) => Promise<void>;
+      isMutating: boolean;
+      mutationError: string | null;
     };
 
 /**
