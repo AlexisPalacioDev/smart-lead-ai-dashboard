@@ -50,7 +50,9 @@ web/src/
 
   components/
     dashboard/
-      ui/
+      kpi-grid.tsx
+    ui/
+      page-header.tsx
 
   features/
     dashboard/
