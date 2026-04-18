@@ -4,7 +4,7 @@ import {
   createMemoryHistory,
   createRouter,
 } from '@tanstack/react-router'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { routeTree } from '../routeTree.gen'
 
@@ -25,6 +25,17 @@ function renderRoute(entry: string) {
 }
 
 describe('route placeholders', () => {
+  it('renders the dashboard placeholder without React document warnings', async () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    renderRoute('/dashboard')
+
+    expect(await screen.findByText(/^command deck$/i)).toBeInTheDocument()
+    expect(consoleError).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
   it('renders a technical command-deck dashboard placeholder', async () => {
     renderRoute('/dashboard')
 
