@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/ai-summary')({
   component: AISummaryPage,
@@ -6,11 +6,40 @@ export const Route = createFileRoute('/ai-summary')({
 
 function AISummaryPage() {
   return (
-    <section className="space-y-3">
-      <p className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--color-muted)]">
-        Intelligence
-      </p>
-      <h2 className="text-3xl font-semibold">AI Summary</h2>
+    <section className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <article className="terminal-panel rise-in space-y-6 p-6 lg:p-10">
+        <div className="space-y-4">
+          <p className="terminal-eyebrow">AI Briefing</p>
+          <h2 className="terminal-heading">AI Summary</h2>
+          <p className="terminal-copy">
+            This surface is reserved for executive synthesis: filtered lead
+            context in, concise recommendations out. No chat shell, no table
+            duplication.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Link className="terminal-link terminal-link--primary" to="/ai-summary">
+            [ GENERATE SUMMARY ]
+          </Link>
+          <Link className="terminal-link" to="/leads">
+            [ RETURN TO DIRECTORY ]
+          </Link>
+        </div>
+      </article>
+      <article className="terminal-panel--high p-6 lg:p-10">
+        <p className="terminal-eyebrow">Output Layout</p>
+        <div className="mt-4 grid gap-4">
+          <div className="terminal-metric p-4">
+            <p className="terminal-eyebrow">General Analysis</p>
+          </div>
+          <div className="terminal-metric p-4">
+            <p className="terminal-eyebrow">Main Source</p>
+          </div>
+          <div className="terminal-metric p-4">
+            <p className="terminal-eyebrow">Recommendations</p>
+          </div>
+        </div>
+      </article>
     </section>
   )
 }
