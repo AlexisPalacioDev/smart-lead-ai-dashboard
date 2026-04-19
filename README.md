@@ -21,6 +21,12 @@ Desktop-first TanStack Start workspace for dashboard, leads directory, and AI ex
 - `pnpm test`
 - `pnpm build`
 
+## Storybook
+
+- `pnpm --dir web storybook` runs the visual component catalog locally
+- `pnpm --dir web build-storybook` validates the catalog before delivery or CI
+- Reusable components should live in `web/src/components/**` and ship with a colocated `*.stories.tsx` file
+
 ## Architecture
 
 - `web/src/features/*/domain` keeps framework-agnostic business rules

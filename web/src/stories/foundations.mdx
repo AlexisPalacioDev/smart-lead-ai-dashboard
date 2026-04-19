@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Overview" />
+
+# Smart Lead AI Dashboard Foundations
+
+## Principles
+
+- Dark editorial control-room aesthetic from Stitch
+- One primary action per surface
+- Loading, empty, error, and success states are explicit
+- Data-heavy components prefer clarity over decoration
+
+## Tokens
+
+- Background: `#101418`
+- Surface Lowest: `#0a0f13`
+- Surface Low: `#181c21`
+- Surface: `#1c2025`
+- Surface High: `#262a2f`
+- Surface Highest: `#31353a`
+- Primary: `#00ff41`
+- Danger: `#ffb4ab`
+
+## Storybook Coverage Rules
+
+- Every reusable component in `src/components/**` needs a colocated story
+- Form, modal, and data states must show happy path plus failure or empty variants
+- Stories use deterministic mock data only
