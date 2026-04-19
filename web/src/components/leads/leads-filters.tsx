@@ -26,6 +26,8 @@ export function LeadsFilters({ filters, onChange }: LeadsFiltersProps) {
       <label className="flex flex-col gap-2">
         <span className="terminal-eyebrow">Buscar lead</span>
         <input
+          id="leads-filter-query"
+          name="leads-filter-query"
           aria-label="Buscar lead"
           type="search"
           value={filters.query}
@@ -36,6 +38,8 @@ export function LeadsFilters({ filters, onChange }: LeadsFiltersProps) {
       <label className="flex flex-col gap-2">
         <span className="terminal-eyebrow">Fuente</span>
         <select
+          id="leads-filter-source"
+          name="leads-filter-source"
           aria-label="Fuente"
           value={filters.source}
           onChange={(event) =>
@@ -55,6 +59,8 @@ export function LeadsFilters({ filters, onChange }: LeadsFiltersProps) {
       <label className="flex flex-col gap-2">
         <span className="terminal-eyebrow">Desde</span>
         <input
+          id="leads-filter-start-date"
+          name="leads-filter-start-date"
           aria-label="Fecha inicial"
           type="date"
           value={filters.startDate}
@@ -65,6 +71,8 @@ export function LeadsFilters({ filters, onChange }: LeadsFiltersProps) {
       <label className="flex flex-col gap-2">
         <span className="terminal-eyebrow">Hasta</span>
         <input
+          id="leads-filter-end-date"
+          name="leads-filter-end-date"
           aria-label="Fecha final"
           type="date"
           value={filters.endDate}

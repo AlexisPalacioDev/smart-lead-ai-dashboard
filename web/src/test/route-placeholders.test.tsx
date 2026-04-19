@@ -71,7 +71,7 @@ describe("route placeholders", () => {
       await screen.findByRole("searchbox", { name: /buscar lead/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /\[new lead\]/i }),
+      screen.getByRole("button", { name: /\[nuevo lead\]/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("table", { name: /tabla de leads/i }),

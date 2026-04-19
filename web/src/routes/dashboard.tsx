@@ -40,7 +40,7 @@ function DashboardRoute() {
     return (
       <DashboardScaffold
         header={viewModel.header}
-        body={<LoadingState label="Compiling dashboard telemetry." />}
+        body={<LoadingState label="Cargando dashboard ejecutivo." />}
       />
     );
   }
@@ -130,7 +130,7 @@ function DashboardScaffold({
   body: React.ReactNode;
 }) {
   return (
-    <section className="space-y-8">
+    <section aria-labelledby="dashboard-route-title" className="space-y-8">
       <DashboardHeader viewModel={header} />
       {body}
     </section>
@@ -170,6 +170,7 @@ function DashboardHeader({
 
   return (
     <PageHeader
+      headingId="dashboard-route-title"
       title={viewModel.title}
       description={viewModel.description}
       actions={<Actions />}

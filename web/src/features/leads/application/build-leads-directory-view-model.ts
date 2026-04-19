@@ -84,7 +84,7 @@ export function buildLeadsDirectoryHeaderViewModel(): LeadsDirectoryViewModel["h
     title: "Leads Directory",
     description:
       "Gestion operativa de leads con busqueda, filtros, orden por fecha y estados de ruta.",
-    actionLabel: "NEW LEAD",
+    actionLabel: "Nuevo lead",
   };
 }
 

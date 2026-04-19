@@ -180,8 +180,9 @@ export function AISummaryPage({
 
 function AISummaryScaffold({ body }: { body: React.ReactNode }) {
   return (
-    <section className="space-y-8">
+    <section aria-labelledby="ai-summary-route-title" className="space-y-8">
       <PageHeader
+        headingId="ai-summary-route-title"
         title="AI Summary"
         description="Genera un resumen ejecutivo del pipeline usando OpenAI."
       />

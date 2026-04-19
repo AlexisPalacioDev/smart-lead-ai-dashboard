@@ -20,6 +20,13 @@ type LeadFormModalProps = {
   onSubmit: (values: LeadFormInput) => Promise<void>;
 };
 
+function getFieldInputProps(name: keyof LeadFormInput) {
+  return {
+    id: `lead-${name}`,
+    name: `lead-${name}`,
+  };
+}
+
 /**
  * Renders the create/edit lead dialog with schema-backed submission validation.
  *
@@ -80,6 +87,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
             {(field) => (
               <FormField label="Nombre" error={getErrorMessage(field.state.meta.errors[0])}>
                 <input
+                  {...getFieldInputProps("name")}
                   aria-label="Nombre"
                   value={field.state.value}
                   onChange={(event) => field.handleChange(event.target.value)}
@@ -92,6 +100,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
             {(field) => (
               <FormField label="Email" error={getErrorMessage(field.state.meta.errors[0])}>
                 <input
+                  {...getFieldInputProps("email")}
                   aria-label="Email"
                   type="email"
                   value={field.state.value}
@@ -105,6 +114,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
             {(field) => (
               <FormField label="Telefono">
                 <input
+                  {...getFieldInputProps("phone")}
                   aria-label="Telefono"
                   type="tel"
                   value={field.state.value}
@@ -118,6 +128,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
             {(field) => (
               <FormField label="Fuente">
                 <select
+                  {...getFieldInputProps("source")}
                   aria-label="Fuente"
                   value={field.state.value}
                   onChange={(event) =>
@@ -138,6 +149,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
             {(field) => (
               <FormField label="Producto de interes">
                 <input
+                  {...getFieldInputProps("productInterest")}
                   aria-label="Producto de interes"
                   value={field.state.value}
                   onChange={(event) => field.handleChange(event.target.value)}
@@ -153,6 +165,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
                 error={getErrorMessage(field.state.meta.errors[0])}
               >
                 <input
+                  {...getFieldInputProps("budget")}
                   aria-label="Presupuesto"
                   type="number"
                   min="0"

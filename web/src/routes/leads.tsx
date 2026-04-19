@@ -73,7 +73,7 @@ function LeadsRoute() {
     return (
       <LeadsScaffold
         header={viewModel.header}
-        body={<LoadingState label="Loading lead register." />}
+        body={<LoadingState label="Cargando directorio de leads." />}
       />
     );
   }
@@ -107,8 +107,8 @@ function LeadsRoute() {
         body={
           <EmptyState
             title="No hay leads para mostrar."
-            actionLabel="Recargar"
-            onAction={() => viewModel.retry()}
+            actionLabel="Crear lead"
+            onAction={() => setModalState({ type: "create" })}
           />
         }
       />

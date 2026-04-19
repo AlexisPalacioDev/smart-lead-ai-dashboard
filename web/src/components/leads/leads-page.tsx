@@ -71,8 +71,9 @@ export function LeadsScaffold({
   onCreateLead?: () => void;
 }) {
   return (
-    <section className="space-y-8">
+    <section aria-labelledby="leads-route-title" className="space-y-8">
       <PageHeader
+        headingId="leads-route-title"
         title={header.title}
         description={header.description}
         actions={
