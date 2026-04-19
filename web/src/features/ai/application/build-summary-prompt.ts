@@ -1,5 +1,7 @@
-import type { Lead } from "../../leads/domain/lead";
+// Application
 import { getLeadSourceLabel } from "../../leads/application/lead-source-labels";
+// Types
+import type { Lead } from "../../leads/domain/lead";
 import type { SummaryFilters } from "./summary-ports";
 
 /**

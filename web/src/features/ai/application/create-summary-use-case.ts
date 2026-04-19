@@ -1,8 +1,7 @@
+// Application
 import { buildSummaryPrompt } from "./build-summary-prompt";
-import type {
-  CreateSummaryInput,
-  SummaryServicePort,
-} from "./summary-ports";
+// Types
+import type { CreateSummaryInput, SummaryServicePort } from "./summary-ports";
 
 /**
  * create-summary-use-case.ts

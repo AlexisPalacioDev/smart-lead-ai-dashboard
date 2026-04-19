@@ -3,23 +3,27 @@
  * Defines the AI Summary route and page state flow. Prompt composition and
  * OpenAI transport stay outside the UI layer.
  */
-import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 
+// Components
 import { SummaryFilters } from "../components/ai/summary-filters";
 import { SummaryResult } from "../components/ai/summary-result";
 import { SummaryState } from "../components/ai/summary-state";
 import { PageHeader } from "../components/ui/page-header";
+// Application
 import { createSummaryUseCase } from "../features/ai/application/create-summary-use-case";
+import { filterLeads } from "../features/leads/application/lead-filters";
+import { getLeadSourceLabel } from "../features/leads/application/lead-source-labels";
+import { createLeadUseCases } from "../features/leads/application/lead-use-cases";
+// Types
 import type {
   SummaryFilters as SummaryFilterValues,
   SummaryResult as SummaryResultValue,
 } from "../features/ai/application/summary-ports";
+// Infrastructure
 import { summaryService } from "../features/ai/infrastructure/summary-service";
-import { filterLeads } from "../features/leads/application/lead-filters";
-import { getLeadSourceLabel } from "../features/leads/application/lead-source-labels";
-import { createLeadUseCases } from "../features/leads/application/lead-use-cases";
 import { leadFixtures } from "../features/leads/infrastructure/lead-fixtures";
 import { createLeadsRepository } from "../features/leads/infrastructure/leads-repository";
 
@@ -38,11 +42,12 @@ const leadUseCases = createLeadUseCases(createLeadsRepository());
 const summaryUseCase = createSummaryUseCase(summaryService);
 const SOURCE_OPTIONS: SummarySourceOption[] = [
   { value: "all", label: "Todas" },
-  ...(["instagram", "facebook", "landing_page", "referido", "otro"] as const)
-    .map((source) => ({
-      value: source,
-      label: getLeadSourceLabel(source),
-    })),
+  ...(
+    ["instagram", "facebook", "landing_page", "referido", "otro"] as const
+  ).map((source) => ({
+    value: source,
+    label: getLeadSourceLabel(source),
+  })),
 ];
 
 type CreateSummaryInput = Parameters<typeof summaryUseCase.execute>[0];
@@ -96,9 +101,7 @@ export function AISummaryPage({
   createSummary = summaryUseCase.execute,
 }: {
   leads?: CreateSummaryInput["leads"];
-  createSummary?: (
-    input: CreateSummaryInput,
-  ) => Promise<SummaryResultValue>;
+  createSummary?: (input: CreateSummaryInput) => Promise<SummaryResultValue>;
 }) {
   const [filters, setFilters] = useState(DEFAULT_SUMMARY_FILTERS);
   const [isLoading, setIsLoading] = useState(false);

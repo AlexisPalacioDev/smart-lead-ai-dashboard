@@ -43,13 +43,9 @@ export function SummaryState({
 
   if (status === "empty") {
     return (
-      <EmptyState
-        title="No hay leads para resumir con los filtros actuales."
-      />
+      <EmptyState title="No hay leads para resumir con los filtros actuales." />
     );
   }
 
-  return (
-    <EmptyState title="Genera un resumen ejecutivo para comenzar." />
-  );
+  return <EmptyState title="Genera un resumen ejecutivo para comenzar." />;
 }

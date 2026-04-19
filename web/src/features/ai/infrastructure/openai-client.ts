@@ -1,7 +1,19 @@
 /**
  * openai-client.ts
- * Wraps the frontend-only OpenAI Responses API request used by the AI Summary
- * route. Assumes credentials are provided through Vite environment variables.
+ * Encapsulates the low-level HTTP request sent to the OpenAI Responses API for
+ * the AI Summary feature.
+ *
+ * This module is intentionally transport-focused:
+ * - it reads the browser-side Vite environment variables
+ * - it sends the request to `/v1/responses`
+ * - it asks OpenAI for strict JSON-schema output
+ * - it converts transport failures into stable UI-safe errors
+ *
+ * Prompt composition does not live here. The application layer builds the
+ * prompt before calling this client, and the summary service parses the JSON
+ * payload after this client returns it. Keeping this file narrow prevents the
+ * route and use case layers from depending on fetch details, auth headers, or
+ * raw OpenAI response shapes.
  */
 
 type OpenAIResponsesPayload = {
@@ -43,6 +55,11 @@ const SUMMARY_SCHEMA = {
 export async function requestOpenAISummary(
   prompt: string,
 ): Promise<OpenAIResponsesPayload> {
+  /**
+   * Uses a configurable model from Vite env when present and otherwise falls
+   * back to a stable default. This keeps local setup lightweight while still
+   * allowing the feature to switch models without code changes.
+   */
   const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
   const model = import.meta.env.VITE_OPENAI_MODEL || DEFAULT_OPENAI_MODEL;
 
@@ -78,6 +95,12 @@ export async function requestOpenAISummary(
 }
 
 async function readErrorMessage(response: Response) {
+  /**
+   * OpenAI error bodies may include a structured `error.message`. When that is
+   * unavailable or malformed, the feature falls back to one stable Spanish
+   * message so the UI does not leak transport-specific details or crash on
+   * unexpected payloads.
+   */
   try {
     const payload = (await response.json()) as {
       error?: { message?: string };
