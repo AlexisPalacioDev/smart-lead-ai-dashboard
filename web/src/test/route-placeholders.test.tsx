@@ -10,8 +10,8 @@ import { routeTree } from "../routeTree.gen";
 
 /**
  * route-placeholders.test.tsx
- * Verifies implemented and placeholder routes expose their expected headings
- * and primary actions while the plan is still in progress.
+ * Verifies implemented routes expose their expected headings and primary
+ * actions while the plan is still in progress.
  * Assumes route tree generation stays current with files under `src/routes`.
  */
 
@@ -78,12 +78,15 @@ describe("route placeholders", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders an intelligence placeholder with a return action", async () => {
+  it("renders the ai summary route with filters and generate action", async () => {
     renderRoute("/ai-summary");
 
-    expect(await screen.findByText(/^ai briefing$/i)).toBeInTheDocument();
+    expect(await screen.findByText(/^ai summary$/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /\[ return to directory \]/i }),
+      await screen.findByLabelText(/fuente/i),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: /\[generar resumen\]/i }),
     ).toBeInTheDocument();
   });
 });
