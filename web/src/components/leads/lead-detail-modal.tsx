@@ -36,7 +36,7 @@ export function LeadDetailModal({
       <div className="terminal-panel w-full max-w-2xl p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="terminal-eyebrow">Lead profile</p>
+            <p className="terminal-eyebrow">Perfil de lead</p>
             <h2 id="lead-detail-modal-title" className="text-2xl font-bold">
               {lead.name}
             </h2>

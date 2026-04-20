@@ -81,7 +81,7 @@ export function buildLeadsDirectoryViewModel(
  */
 export function buildLeadsDirectoryHeaderViewModel(): LeadsDirectoryViewModel["header"] {
   return {
-    title: "Leads Directory",
+    title: "Directorio de leads",
     description:
       "Gestion operativa de leads con busqueda, filtros, orden por fecha y estados de ruta.",
     actionLabel: "Nuevo lead",

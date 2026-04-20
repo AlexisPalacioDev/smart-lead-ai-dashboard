@@ -35,7 +35,7 @@ export function buildDashboardViewModel(leads: Lead[]): DashboardViewModel {
   return {
     kpis: [
       {
-        label: "Total Leads",
+        label: "Total leads",
         value: String(stats.totalLeads),
         description: "Volumen total registrado en almacenamiento local.",
       },
@@ -46,13 +46,13 @@ export function buildDashboardViewModel(leads: Lead[]): DashboardViewModel {
           "Promedio calculado solo con leads que reportan presupuesto.",
       },
       {
-        label: "Ultimos 7 Dias",
+        label: "Ultimos 7 dias",
         value: String(stats.leadsLast7Days),
         description:
           "Entradas creadas dentro de ventana operativa mas reciente.",
       },
       {
-        label: "Fuente Principal",
+        label: "Fuente principal",
         value: SOURCE_LABELS[stats.topSource],
         description: "Canal con mayor participacion dentro del set actual.",
       },

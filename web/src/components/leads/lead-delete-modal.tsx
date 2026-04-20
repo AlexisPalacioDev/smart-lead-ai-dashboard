@@ -34,7 +34,7 @@ export function LeadDeleteModal({
     >
       <div className="terminal-panel w-full max-w-md p-6 shadow-2xl">
         <p className="terminal-eyebrow text-[var(--color-danger)]">
-          Destructive action
+          Accion destructiva
         </p>
         <h2 id="lead-delete-modal-title" className="mt-2 text-2xl font-bold">
           Eliminar lead

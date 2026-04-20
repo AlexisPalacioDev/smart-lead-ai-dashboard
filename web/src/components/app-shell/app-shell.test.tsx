@@ -38,10 +38,10 @@ describe("AppShell", () => {
     renderAppShell();
 
     expect(
-      await screen.findByRole("link", { name: /skip to main content/i }),
+      await screen.findByRole("link", { name: /saltar al contenido principal/i }),
     ).toBeInTheDocument();
     expect(
-      await screen.findByRole("navigation", { name: /primary/i }),
+      await screen.findByRole("navigation", { name: /principal/i }),
     ).toBeInTheDocument();
   });
 });

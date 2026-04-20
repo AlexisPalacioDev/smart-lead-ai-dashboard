@@ -16,7 +16,7 @@ interface EmptyStateProps {
 export function EmptyState({ title, actionLabel, onAction }: EmptyStateProps) {
   return (
     <div className="terminal-panel--high space-y-5 p-6 lg:p-8">
-      <p className="terminal-eyebrow">No Signal</p>
+      <p className="terminal-eyebrow">Sin señal</p>
       <h2 className="text-2xl font-bold uppercase tracking-[-0.04em]">
         {title}
       </h2>

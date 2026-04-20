@@ -23,7 +23,7 @@ export function PageHeader({
   return (
     <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
       <div className="space-y-3">
-        <p className="terminal-eyebrow">Route Header</p>
+        <p className="terminal-eyebrow">Encabezado</p>
         <div className="space-y-2">
           <h1
             id={headingId}

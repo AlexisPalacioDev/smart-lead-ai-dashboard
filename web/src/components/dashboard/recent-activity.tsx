@@ -27,7 +27,7 @@ export function RecentActivity({ items }: RecentActivityProps) {
       className="terminal-panel--high p-6 lg:p-8"
     >
       <div className="space-y-2">
-        <p className="terminal-eyebrow">Recent Feed</p>
+        <p className="terminal-eyebrow">Flujo reciente</p>
         <h2
           id="recent-activity-title"
           className="text-2xl font-bold uppercase tracking-[-0.04em]"

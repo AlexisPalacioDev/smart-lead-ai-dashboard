@@ -183,7 +183,7 @@ function AISummaryScaffold({ body }: { body: React.ReactNode }) {
     <section aria-labelledby="ai-summary-route-title" className="space-y-8">
       <PageHeader
         headingId="ai-summary-route-title"
-        title="AI Summary"
+        title="Resumen con IA"
         description="Genera un resumen ejecutivo del pipeline usando OpenAI."
       />
       {body}

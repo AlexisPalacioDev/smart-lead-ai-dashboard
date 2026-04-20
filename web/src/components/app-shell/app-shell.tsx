@@ -9,8 +9,8 @@ import { Link } from "@tanstack/react-router";
 
 const links = [
   { to: "/dashboard", label: "Dashboard" },
-  { to: "/leads", label: "Leads Directory" },
-  { to: "/ai-summary", label: "AI Summary" },
+  { to: "/leads", label: "Directorio de leads" },
+  { to: "/ai-summary", label: "Resumen con IA" },
 ] as const;
 
 export function AppShell({ children }: { children?: React.ReactNode }) {
@@ -20,25 +20,26 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-[var(--color-primary-container)] focus:px-3 focus:py-2 focus:text-[var(--color-primary-ink)]"
         href="#main-content"
       >
-        Skip to main content
+        Saltar al contenido principal
       </a>
       <header className="sticky top-0 z-20 bg-[color:rgba(10,15,19,0.88)]/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-5 px-6 py-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-2">
             <p className="terminal-eyebrow text-[var(--color-primary-container)]">
-              &gt;_ Sovereign Console
+              &gt;_ Consola soberana
             </p>
             <div className="space-y-1">
               <h1 className="text-2xl font-bold uppercase tracking-[-0.06em] lg:text-4xl">
                 Smart Lead AI
               </h1>
               <p className="max-w-2xl text-sm uppercase tracking-[0.2em] text-[var(--color-muted)]">
-                Digital brutalism for lead command, analytics, and AI synthesis.
+                Brutalismo digital para control comercial, analitica y sintesis
+                con IA.
               </p>
             </div>
           </div>
           <nav
-            aria-label="Primary"
+            aria-label="Principal"
             className="flex flex-wrap items-center gap-3"
           >
             {links.map((link) => (

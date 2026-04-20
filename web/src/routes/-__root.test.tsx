@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
-import { AppShell } from '../components/app-shell/app-shell'
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import { AppShell } from "../components/app-shell/app-shell";
 
 /**
  * -__root.test.tsx
@@ -8,28 +8,24 @@ import { AppShell } from '../components/app-shell/app-shell'
  * Uses a lightweight mocked `Link` so assertions stay focused on labels.
  */
 
-vi.mock('@tanstack/react-router', () => ({
-  Link: ({
-    children,
-    to,
-  }: {
-    children: React.ReactNode
-    to: string
-  }) => <a href={to}>{children}</a>,
-}))
+vi.mock("@tanstack/react-router", () => ({
+  Link: ({ children, to }: { children: React.ReactNode; to: string }) => (
+    <a href={to}>{children}</a>
+  ),
+}));
 
-describe('AppShell', () => {
-  it('renders the three approved top-level routes', () => {
-    render(<AppShell />)
+describe("AppShell", () => {
+  it("renders the three approved top-level routes", () => {
+    render(<AppShell />);
 
     expect(
-      screen.getByRole('link', { name: /dashboard/i }),
-    ).toBeInTheDocument()
+      screen.getByRole("link", { name: /dashboard/i }),
+    ).toBeInTheDocument();
     expect(
-      screen.getByRole('link', { name: /leads directory/i }),
-    ).toBeInTheDocument()
+      screen.getByRole("link", { name: /directorio de leads/i }),
+    ).toBeInTheDocument();
     expect(
-      screen.getByRole('link', { name: /ai summary/i }),
-    ).toBeInTheDocument()
-  })
-})
+      screen.getByRole("link", { name: /resumen con ia/i }),
+    ).toBeInTheDocument();
+  });
+});

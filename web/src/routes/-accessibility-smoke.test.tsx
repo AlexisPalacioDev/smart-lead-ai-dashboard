@@ -28,24 +28,28 @@ describe("route accessibility smoke test", () => {
     expect(
       await screen.findByRole("heading", { name: /dashboard/i }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /dashboard/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /dashboard/i }),
+    ).toBeInTheDocument();
     dashboard.unmount();
 
     const leads = renderRoute("/leads");
     expect(
-      await screen.findByRole("heading", { name: /leads directory/i }),
+      await screen.findByRole("heading", { name: /directorio de leads/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("region", { name: /leads directory/i }),
+      screen.getByRole("region", { name: /directorio de leads/i }),
     ).toBeInTheDocument();
     await screen.findByRole("button", { name: /nuevo lead/i });
     leads.unmount();
 
     renderRoute("/ai-summary");
     expect(
-      await screen.findByRole("heading", { name: /ai summary/i }),
+      await screen.findByRole("heading", { name: /resumen con ia/i }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /ai summary/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /resumen con ia/i }),
+    ).toBeInTheDocument();
     await screen.findByRole("button", { name: /generar resumen/i });
   });
 });

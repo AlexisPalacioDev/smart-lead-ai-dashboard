@@ -35,9 +35,9 @@ export function LeadsTable({
   return (
     <section className="terminal-panel overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-3 p-5">
-        <p className="terminal-eyebrow">{pagination.total} records</p>
+        <p className="terminal-eyebrow">{pagination.total} registros</p>
         <p className="text-sm text-[var(--color-muted)]">
-          Page {pagination.page} / {pagination.totalPages}
+          Pagina {pagination.page} / {pagination.totalPages}
         </p>
       </div>
       <div className="overflow-x-auto">
@@ -99,14 +99,14 @@ export function LeadsTable({
                         onClick={() => onEditLead(lead.id)}
                         className="terminal-link px-2 py-1"
                       >
-                        [EDIT]
+                        [EDITAR]
                       </button>
                       <button
                         type="button"
                         onClick={() => onDeleteLead(lead.id)}
                         className="terminal-link px-2 py-1 text-[var(--color-danger)]"
                       >
-                        [DEL]
+                        [ELIMINAR]
                       </button>
                     </div>
                   </td>
@@ -123,7 +123,7 @@ export function LeadsTable({
           onClick={() => onPageChange(pagination.page - 1)}
           className="terminal-link disabled:cursor-not-allowed disabled:opacity-40"
         >
-          [PREV]
+          [ANT]
         </button>
         <button
           type="button"
@@ -131,7 +131,7 @@ export function LeadsTable({
           onClick={() => onPageChange(pagination.page + 1)}
           className="terminal-link disabled:cursor-not-allowed disabled:opacity-40"
         >
-          [NEXT]
+          [SIG]
         </button>
       </div>
     </section>

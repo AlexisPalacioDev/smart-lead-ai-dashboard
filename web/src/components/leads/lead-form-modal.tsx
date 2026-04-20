@@ -61,7 +61,7 @@ export function LeadFormModal(props: LeadFormModalProps) {
       <div className="terminal-panel w-full max-w-3xl p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="terminal-eyebrow">Lead operation</p>
+            <p className="terminal-eyebrow">Gestion de lead</p>
             <h2 id="lead-form-modal-title" className="text-2xl font-bold">
               {title}
             </h2>

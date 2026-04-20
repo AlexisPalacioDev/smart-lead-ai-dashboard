@@ -66,8 +66,8 @@ export function useDashboardHeaderViewModel(): DashboardHeaderViewModel {
     description:
       "Resumen ejecutivo del pipeline actual: volumen, presupuesto, ritmo reciente y fuente dominante.",
     actions: [
-      { label: "OPEN DIRECTORY", to: "/leads", isPrimary: true },
-      { label: "OPEN AI", to: "/ai-summary" },
+      { label: "ABRIR DIRECTORIO", to: "/leads", isPrimary: true },
+      { label: "ABRIR IA", to: "/ai-summary" },
     ],
   };
 }

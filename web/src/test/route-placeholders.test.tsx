@@ -56,17 +56,19 @@ describe("route placeholders", () => {
 
     expect(await screen.findByText(/^dashboard$/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /\[open directory\]/i }),
+      screen.getByRole("link", { name: /\[abrir directorio\]/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /\[open ai\]/i }),
+      screen.getByRole("link", { name: /\[abrir ia\]/i }),
     ).toBeInTheDocument();
   });
 
   it("renders the operational leads directory with filters and create action", async () => {
     renderRoute("/leads");
 
-    expect(await screen.findByText(/^leads directory$/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/^directorio de leads$/i),
+    ).toBeInTheDocument();
     expect(
       await screen.findByRole("searchbox", { name: /buscar lead/i }),
     ).toBeInTheDocument();
@@ -81,10 +83,8 @@ describe("route placeholders", () => {
   it("renders the ai summary route with filters and generate action", async () => {
     renderRoute("/ai-summary");
 
-    expect(await screen.findByText(/^ai summary$/i)).toBeInTheDocument();
-    expect(
-      await screen.findByLabelText(/fuente/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/^resumen con ia$/i)).toBeInTheDocument();
+    expect(await screen.findByLabelText(/fuente/i)).toBeInTheDocument();
     expect(
       await screen.findByRole("button", { name: /\[generar resumen\]/i }),
     ).toBeInTheDocument();

@@ -92,7 +92,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
  */
 export function DocumentFrame({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <HeadContent />
       </head>

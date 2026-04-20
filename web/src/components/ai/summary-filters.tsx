@@ -28,11 +28,11 @@ export function SummaryFilters({
   return (
     <section className="terminal-panel--high space-y-5 p-5 lg:p-6">
       <div className="space-y-2">
-        <p className="terminal-eyebrow">Summary Scope</p>
+        <p className="terminal-eyebrow">Alcance del resumen</p>
         <p className="terminal-copy">
           Filtra subconjunto de leads antes de pedir sintesis ejecutiva.
         </p>
-        <p className="terminal-eyebrow">{leadCount} leads listos</p>
+        <p className="terminal-eyebrow">{leadCount} leads disponibles</p>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         <label className="flex flex-col gap-2" htmlFor="summary-source">

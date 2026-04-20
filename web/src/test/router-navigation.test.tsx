@@ -15,7 +15,7 @@ import { routeTree } from "../routeTree.gen";
  */
 
 describe("router navigation", () => {
-  it("renders the leads page after clicking Leads Directory", async () => {
+  it("renders the leads page after clicking Directorio de leads", async () => {
     const user = userEvent.setup();
     const history = createMemoryHistory({
       initialEntries: ["/dashboard"],
@@ -35,10 +35,12 @@ describe("router navigation", () => {
       await screen.findByRole("heading", { name: "Dashboard" }),
     ).toBeInTheDocument();
 
-    await user.click(screen.getByRole("link", { name: /leads directory/i }));
+    await user.click(
+      screen.getByRole("link", { name: /directorio de leads/i }),
+    );
 
     expect(
-      await screen.findByRole("heading", { name: "Leads Directory" }),
+      await screen.findByRole("heading", { name: "Directorio de leads" }),
     ).toBeInTheDocument();
   });
 });

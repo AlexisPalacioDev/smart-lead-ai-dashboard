@@ -23,7 +23,7 @@ export function SourceBarChart({ items }: SourceBarChartProps) {
       className="terminal-panel p-6 lg:p-8"
     >
       <div className="space-y-2">
-        <p className="terminal-eyebrow">Distribution</p>
+        <p className="terminal-eyebrow">Distribucion</p>
         <h2
           id="source-bar-chart-title"
           className="text-2xl font-bold uppercase tracking-[-0.04em]"

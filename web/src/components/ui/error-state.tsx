@@ -16,7 +16,7 @@ export function ErrorState({ title, action }: ErrorStateProps) {
   return (
     <div role="alert" className="terminal-panel space-y-4 p-6 lg:p-8">
       <p className="terminal-eyebrow text-[var(--color-danger)]">
-        System Fault
+        Falla del sistema
       </p>
       <h2 className="text-2xl font-bold uppercase tracking-[-0.04em] text-[var(--color-danger)]">
         {title}
