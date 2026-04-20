@@ -1,30 +1,13 @@
-import type { Lead } from "../domain/lead";
+import type { LeadInput } from "../application/lead-ports";
+import { createLeadHttp, deleteLeadHttp, fetchLeadsHttp, updateLeadHttp } from "./leads-http-api";
+import {
+  createLeadLocalStorage,
+  deleteLeadLocalStorage,
+  fetchLeadsLocalStorage,
+  updateLeadLocalStorage,
+} from "./leads-local-storage-api";
 
-/**
- * leads-api.ts
- * Wraps browser `fetch` calls for lead CRUD operations against mocked endpoints.
- * Assumes the MSW layer or a compatible backend exposes `/api/leads` routes.
- */
-
-type LeadInput = Omit<Lead, "id" | "createdAt">;
-
-/**
- * Parses a successful JSON response or throws a stable domain-facing error.
- *
- * @template T
- * @param {Response} response - Fetch response to inspect.
- * @param {string} message - Error message surfaced on non-OK responses.
- * @returns {Promise<T>} Parsed JSON payload.
- *
- * Reads JSON response or throws stable request error.
- */
-async function readJson<T>(response: Response, message: string): Promise<T> {
-  if (!response.ok) {
-    throw new Error(message);
-  }
-
-  return response.json() as Promise<T>;
-}
+const isDevelopment = import.meta.env.DEV;
 
 /**
  * Requests the full lead collection from the API.
@@ -34,9 +17,11 @@ async function readJson<T>(response: Response, message: string): Promise<T> {
  * Fetches full lead collection from mocked API.
  */
 export function fetchLeads() {
-  return fetch("/api/leads").then((response) =>
-    readJson<Lead[]>(response, "Lead request failed"),
-  );
+  if (isDevelopment) {
+    return fetchLeadsHttp();
+  }
+
+  return fetchLeadsLocalStorage();
 }
 
 /**
@@ -48,13 +33,11 @@ export function fetchLeads() {
  * Creates lead through mocked API.
  */
 export function createLeadRequest(input: LeadInput) {
-  return fetch("/api/leads", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(input),
-  }).then((response) => readJson<Lead>(response, "Lead create failed"));
+  if (isDevelopment) {
+    return createLeadHttp(input);
+  }
+
+  return createLeadLocalStorage(input);
 }
 
 /**
@@ -67,13 +50,11 @@ export function createLeadRequest(input: LeadInput) {
  * Updates lead through mocked API.
  */
 export function updateLeadRequest(id: string, input: LeadInput) {
-  return fetch(`/api/leads/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(input),
-  }).then((response) => readJson<Lead>(response, "Lead update failed"));
+  if (isDevelopment) {
+    return updateLeadHttp(id, input);
+  }
+
+  return updateLeadLocalStorage(id, input);
 }
 
 /**
@@ -85,11 +66,9 @@ export function updateLeadRequest(id: string, input: LeadInput) {
  * Deletes lead through mocked API.
  */
 export function deleteLeadRequest(id: string) {
-  return fetch(`/api/leads/${id}`, {
-    method: "DELETE",
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Lead delete failed");
-    }
-  });
+  if (isDevelopment) {
+    return deleteLeadHttp(id);
+  }
+
+  return deleteLeadLocalStorage(id);
 }
